@@ -1,0 +1,92 @@
+Eloqua Lookup README
+
+Introduction
+---------------------------------------------------------------------------------------------------
+This PHP library (Eloqua Lookup) provides extended functionality for Eloqua users.
+
+It allows you to perform Eloqua Data Lookup on the server-side without relying on the Eloqua API and requires no authentication.
+
+Currently, Version 1.0 of the library can:
+
+    * Retrieve contact data
+    * Retrieve prospect data
+    * Retrieve visitor data
+    * Retrieve contact group membership data
+
+This library provides advantage over the default Data Lookup usage to pre-populate forms (e.g. for non-Eloqua hosted web forms) as it does not rely on Javascript, which fails to execute if the browser does not have Javascript enabled or other Javascript errors halt execution. Additionally, this library can be used within web applications to retrieve data based on the the data lookup criteria.
+
+Samples of usage:
+
+    * Pre-populate web forms from users arriving at from an Eloqua email
+    * Custom email subscription page pre-filled with subscribed email groups selected
+    * Implement with a CMS to retrieve user (contact) data.
+
+The implementation requires setting up Data Lookup Entities in Eloqua beforehand to control the criterias for the data lookup.
+---------------------------------------------------------------------------------------------------
+
+
+
+Usage
+---------------------------------------------------------------------------------------------------
+To use Eloqua Lookup, you'll have to set up a Eloqua Data Lookup entity within the Eloqua Administration.
+Upon properly setting up a Data Lookup entity, you'll be able to Get the Data Lookup Scripts, in which you can obtain:
+- the Data Lookup Key (a long hexedecimal string)
+- Data Lookup Criteria String (an XML-like tag formatted string)
+
+You'll also need your Eloqua instance site ID. You can find this through your Eloqua tracking scripts.
+
+To use, simply include the class.eloquaLookup.php file in your script, and initialize the appropriate function depending on whether you want data for Contacts, Prospects, Visitors, or Contact Group Memberships.
+Initializing the function will automatically perform the lookup and store the contents into a variable as an array.
+
+Example for a lookup of a Contact with smail address, john@doe.com:
+
+		<?php
+		include('class.eloquaLookup.php');
+
+		$siteID = 1234;
+		$lookupKey = '12345678901234567890123456789012';
+		$criteria = array(
+				'C_EmailAddress' => 'john@doe.com'
+		);
+
+		$eloqua = new EloquaContactLookup($siteID, $lookupKey, $criteria);
+		echo 'Hi, my name is '.$eloqua->data['FirstName'];
+		?>
+
+In this example, $eloqua->data is an array that stores the Contact's data.
+
+Tip: To see all the content of data array, simple use:
+		print_r($elqoua->data);
+to print out a list of the data keys and values.
+---------------------------------------------------------------------------------------------------
+
+
+
+API
+---------------------------------------------------------------------------------------------------
+Variables:
+	- $data: (Array) Content retrieved from a Eloqua Data Lookup
+	- $siteID: (Integer) Eloqua Instance Site ID
+	- $key: (String) Hexidecimal  ID of the Data Lookup Entity
+	- $GUID: (String) Hexidecimal ID of a Visitor GUID
+	- $criteria (String or Array): List of criteria necessary to do the data lookup
+		Example, as a String: <C_EmailAddress>john@doe.com</C_EmailAddress><ContactIDExt>CCOMP000000012345</ContactIDExt>
+		Example, as an Array: array('C_EmailAddress' => 'john@doe.com', 'ContactIDExt' => 'CCOMP000000012345');
+
+Classes:
+	Retrieve Contact Data:
+		void EloquaContactLookup( Integer $siteID, String $key [, Mixed $criteria=NULL ] )
+
+	Retrieve Prospect Data:
+		void EloquaProspectLookup( Integer $siteID, String $key [, Mixed $criteria=NULL ] )
+
+	Retrieve Visitor Data:
+		void EloquaVisitorLookup( Integer $siteID, String $key [ String $GUID=NULL [, Mixed $criteria=NULL ]] )
+
+	Retrieve Contact Group Membership Data:
+		void EloquaMembershipsLookup( Integer $siteID, String $key [, Mixed $criteria=NULL ] )
+
+Functions:
+	Safely get Contact, Prospect, Visitor data from data array (not used for Contact Group Membership data):
+		String getField( String $fieldName )
+---------------------------------------------------------------------------------------------------
