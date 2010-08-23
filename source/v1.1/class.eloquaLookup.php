@@ -2,7 +2,7 @@
 /***************************************************************************************************
  *
  * Eloqua Server-Side Data Lookup v1.1 (August 23, 2010)
- * http://code.google.com/p/eloqua-lookup/
+ * http://github.com/j-lee/Eloqua-Lookup
  *
  * Copyright 2010 James Lee
  *
