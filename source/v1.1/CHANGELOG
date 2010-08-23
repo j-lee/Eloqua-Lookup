@@ -1,0 +1,12 @@
+Eloqua Lookup CHANGELOG
+
+Version 1.1 (August 23, 2010)
+-------------------------------------------------------------------------------
++ Added initial check to make sure CURL extension is enabled
+-------------------------------------------------------------------------------
+
+Version 1.0 (August 19, 2010)
+-------------------------------------------------------------------------------
+Initial Release
++ Data Lookup for Contacts, Prospects, Visitors and Contact Group Memberships
+-------------------------------------------------------------------------------
