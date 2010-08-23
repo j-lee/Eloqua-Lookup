@@ -26,6 +26,13 @@ The implementation requires setting up Data Lookup Entities in Eloqua beforehand
 
 
 
+Requirements
+---------------------------------------------------------------------------------------------------
+Web Server with PHP5+, with CURL extension enabled
+---------------------------------------------------------------------------------------------------
+
+
+
 Usage
 ---------------------------------------------------------------------------------------------------
 To use Eloqua Lookup, you'll have to set up a Eloqua Data Lookup entity within the Eloqua Administration.

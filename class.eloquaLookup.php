@@ -1,7 +1,7 @@
 <?php
 /***************************************************************************************************
  *
- * Eloqua Server-Side Data Lookup v1.0 (August 19, 2010)
+ * Eloqua Server-Side Data Lookup v1.1 (August 23, 2010)
  * http://code.google.com/p/eloqua-lookup/
  *
  * Copyright 2010 James Lee
@@ -29,6 +29,12 @@ class EloquaLookup {
 	public $key = NULL;  // string: data lookup key
 	public $criteria = NULL;  // string|array: criteria for data lookup
 	public $GUID = NULL;  // string: GUID for visitor lookup
+
+	public function __construct() {
+		// check if curl extension is enabled
+		if (function_exists('curl_init') === FALSE)
+			die('The CURL Extension needs to be enabled to use Eloqua Lookup');
+	}
 
 	// returns data safely from data array by name (only valid for contacts/prospects/visitors lookup)
 	public function getField($name) {
@@ -99,6 +105,7 @@ class EloquaLookup {
 // class to initialize contact lookup
 class EloquaContactLookup extends EloquaLookup {
  	public function __construct($siteID, $key, $criteria=NULL) {
+		parent::__construct();
 		$this->criteria = $criteria;
 		$this->lookupURL = $this->lookupURL.'&siteid='.urlencode(intval($siteID)).'&DLKey='.urlencode($key).'&elqCookie=1';
 		$this->eloquaLookup();
@@ -109,6 +116,7 @@ class EloquaContactLookup extends EloquaLookup {
 // class to initialize prospect lookup
 class EloquaProspectLookup extends EloquaLookup {
  	public function __construct($siteID, $key, $criteria=NULL) {
+		parent::__construct();
 		$this->criteria = $criteria;
 		$this->lookupURL = $this->lookupURL.'&siteid='.urlencode(intval($siteID)).'&DLKey='.urlencode($key).'&elqCookie=1';
 		$this->eloquaLookup();
@@ -119,6 +127,7 @@ class EloquaProspectLookup extends EloquaLookup {
 // class to initialize visitor lookup
 class EloquaVisitorLookup extends EloquaLookup {
  	public function __construct($siteID, $key, $GUID=NULL, $criteria=NULL) {
+		parent::__construct();
 		$this->GUID = strtoupper( preg_replace('/[^a-fA-f0-9\s]/', '', $GUID) );
 		$this->criteria = $criteria;
 		$this->lookupURL = $this->lookupURL.'&siteid='.urlencode(intval($siteID)).'&DLKey='.urlencode($key);
@@ -130,6 +139,7 @@ class EloquaVisitorLookup extends EloquaLookup {
 // class to initialize contact group memberships lookup
 class EloquaMembershipsLookup extends EloquaLookup {
  	public function __construct($siteID, $key, $criteria=NULL) {
+		parent::__construct();
 		$this->criteria = $criteria;
 		$this->lookupURL = $this->lookupURL.'&siteid='.urlencode(intval($siteID)).'&DLKey='.urlencode($key).'&elqCookie=1';
 		$this->eloquaLookup();
