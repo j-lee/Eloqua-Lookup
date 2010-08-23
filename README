@@ -6,7 +6,7 @@ This PHP library (Eloqua Lookup) provides extended functionality for Eloqua user
 
 It allows you to perform Eloqua Data Lookup on the server-side without relying on the Eloqua API and requires no authentication.
 
-Currently, Version 1.0 of the library can:
+Currently, the library can:
 
     * Retrieve contact data
     * Retrieve prospect data
